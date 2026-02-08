@@ -31,9 +31,14 @@ app = FastAPI(
 # Configure CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"] if settings.environment == "development" else [
+    allow_origins=[
         "http://localhost:5173",
-        "http://localhost:3000"
+        "http://localhost:3000",
+        "https://ai-assessment-generator.vercel.app",
+        "https://*.vercel.app"
+    ] if settings.environment == "development" else [
+        "https://ai-assessment-generator.vercel.app",
+        "https://*.vercel.app"
     ],
     allow_credentials=True,
     allow_methods=["*"],
