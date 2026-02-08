@@ -34,12 +34,11 @@ app.add_middleware(
     allow_origins=[
         "http://localhost:5173",
         "http://localhost:3000",
-        "https://ai-assessment-generator.vercel.app",
-        "https://*.vercel.app"
+        "https://ai-assessment-generator.vercel.app"
     ] if settings.environment == "development" else [
-        "https://ai-assessment-generator.vercel.app",
-        "https://*.vercel.app"
+        "https://ai-assessment-generator.vercel.app"
     ],
+    allow_origin_regex=r"https://.*\.vercel\.app",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
