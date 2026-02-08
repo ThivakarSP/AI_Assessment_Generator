@@ -4,9 +4,10 @@ import uuid
 from datetime import datetime
 from sqlalchemy import Column, String, Integer, Text, DateTime, ForeignKey, JSON
 from sqlalchemy.orm import relationship
+from sqlalchemy.dialects.postgresql import ARRAY
 from sqlalchemy.dialects.sqlite import JSON as SQLiteJSON
 
-from app.models.database import Base
+from app.models.database import Base, engine
 
 
 def generate_uuid():
@@ -57,7 +58,8 @@ class Review(Base):
     id = Column(String(36), primary_key=True, default=generate_uuid)
     generation_id = Column(String(36), ForeignKey("generations.id", ondelete="CASCADE"), nullable=False)
     status = Column(String(10), nullable=False)  # pass, fail
-    feedback = Column(JSON)  # Array of feedback strings
+    # Use ARRAY for PostgreSQL, JSON for SQLite
+    feedback = Column(ARRAY(Text) if engine.dialect.name == 'postgresql' else JSON)
     created_at = Column(DateTime, default=datetime.utcnow)
     
     # Relationships
