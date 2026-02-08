@@ -99,7 +99,7 @@ class Orchestrator:
             self.db.commit()
             
             return GenerateResponse(
-                session_id=session.id,
+                session_id=str(session.id),
                 status="completed",
                 generator_output=generator_output,
                 reviewer_output=reviewer_output,
